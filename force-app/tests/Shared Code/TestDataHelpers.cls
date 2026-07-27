@@ -1,5 +1,14 @@
 @isTest
 public class TestDataHelpers {
+    private static final Map<String, String> COUNTRY_CODE_TO_NAME = new Map<String, String>{
+        'US' => 'United States',
+        'MX' => 'Mexico',
+        'UK' => 'United Kingdom',
+        'CA' => 'Canada',
+        'IT' => 'Italy',
+        'IR' => 'Ireland'
+    };
+
     /**
      * @description      Generates an Account object with an optional Country set
      * @param setCountry Boolean should this code set the country code.
@@ -38,7 +47,10 @@ public class TestDataHelpers {
         );
 
         if (setCountry) {
-            acct.ShippingCountry = country;
+            String upperCountry = country.toUpperCase();
+            acct.ShippingCountry = COUNTRY_CODE_TO_NAME.containsKey(upperCountry)
+                ? COUNTRY_CODE_TO_NAME.get(upperCountry)
+                : country;
         }
         return acct;
     }
